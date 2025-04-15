@@ -1,40 +1,121 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+#  Frontend – Next.js App (Item Manager)
 
-## Getting Started
+This is the frontend for a full-stack web application built with **Next.js**. It interacts with a **Spring Boot + MongoDB** backend to allow authenticated users to add and view items.
 
-First, run the development server:
+---
+
+##  Tech Stack
+
+- ✅ **Next.js**
+- ✅ **Bootstrap 5** (via CDN or npm)
+- ✅ `localStorage` for authentication
+- ✅ REST API connection to backend (`http://localhost:8080/api/items`)
+
+---
+
+##  Getting Started
+
+### 1. Requirements
+
+- Node.js v18+
+- Backend must be running on `http://localhost:8080`
+  (Use `./gradlew bootRun` in the backend folder)
+
+---
+
+### 2. Installation
+
+Open terminal, then:
+
+```bash
+cd frontend
+npm install
+```
+
+---
+
+### 3. Running the App
+
+Start the development server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open your browser at:
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+> http://localhost:3000/login
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+---
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+### 4. Login Credentials
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This app uses **hardcoded credentials** on the frontend:
 
-## Learn More
+- **Username:** `admin`
+- **Password:** `password`
 
-To learn more about Next.js, take a look at the following resources:
+Once logged in, you're redirected to `/items` where you can add and view items.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+##  Pages Overview
 
-## Deploy on Vercel
+### `/login`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Form that checks credentials
+- On success → redirects to `/items`
+- Uses `localStorage` to persist session
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+### `/items`
+
+- Protected route (redirects to `/login` if unauthenticated)
+- Shows a list of items fetched from backend (`GET /api/items`)
+- Add new items using a form (`POST /api/items`)
+- Shows success & error messages
+- Styled using Bootstrap + custom CSS
+
+---
+
+##  Project Structure
+
+```bash
+frontend/
+├── pages/
+│   ├── login.js         # Login form
+│   ├── items.js         # Items list + add form
+├── styles/
+│   └── globals.css      # Custom styles + Bootstrap tweaks
+├── public/              # Static files
+├── package.json         # Dependencies and scripts
+└── README.md            # This file
+```
+
+---
+
+##  Error Handling
+
+- Invalid login → error message
+- Empty item field → blocked with frontend validation
+- Backend down → friendly error shown
+- Backend validation error (e.g., blank name) → message shown
+
+---
+
+##  Deployment
+
+You can deploy this frontend to [Vercel](https://vercel.com/) easily:
+
+```bash
+npm run build
+npm run start
+```
+
+Or connect this GitHub repo to Vercel directly.
+
+---
+
+##  Developed By
+
+Mohamad Daher – Computer Science, AUB
+
